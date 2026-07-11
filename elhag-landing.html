@@ -59,7 +59,7 @@
     background:var(--paper);
     color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    font-size:17px;
+    font-size:1.0625rem;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
@@ -560,6 +560,23 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   /* ---------- responsive ---------- */
+  /* ---------- large desktop scaling ---------- */
+  @media (min-width:1440px){
+    html{font-size:18px}
+    .wrap{max-width:1220px}
+    .narrow{max-width:780px}
+    .people{max-width:1120px}
+    .person{flex:0 0 210px}
+    .hero{padding:100px 0 112px}
+    section{padding:84px 0}
+  }
+  @media (min-width:1800px){
+    html{font-size:19.5px}
+    .wrap{max-width:1360px}
+    .people{max-width:1240px}
+    .person{flex:0 0 232px}
+  }
+
   @media (max-width:920px){
     .hero-grid{grid-template-columns:1fr;gap:44px}
     .att-grid{grid-template-columns:1fr;gap:34px}
