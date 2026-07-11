@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Por qué esta landing convierte — Hook, Line &amp; Sinker</title>
+<style>
+  :root{
+    --ink:#0E1B2E; --ink-2:#16263D; --paper:#F6F4EE; --paper-2:#FFFFFF;
+    --text:#1C2536; --muted:#5B6475; --brass:#D9A441; --brass-deep:#9C7222;
+    --brass-ink:#231A05; --alarm:#B33A2B; --line:#DCD7CA;
+    --shadow:0 10px 30px rgba(14,27,46,.12); --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  @media (min-width:1440px){html{font-size:18px}}
+  .display{
+    font-family:"Avenir Next Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+    font-weight:800;text-transform:uppercase;letter-spacing:.01em;line-height:1.06;text-wrap:balance;
+  }
+  .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+  header.hero{
+    background:linear-gradient(180deg,var(--ink),var(--ink-2));color:#F2EDE0;
+    padding:72px 0 64px;border-bottom:6px solid var(--brass);text-align:center;
+  }
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);margin:16px 0 14px;color:#fff}
+  .hero p{max-width:38em;margin:0 auto;color:rgba(242,237,224,.85);font-size:1.1rem}
+  .hero .formula{
+    display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px;
+    font-family:"Avenir Next Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;
+    text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem;
+  }
+  .formula span{border:1.5px solid rgba(217,164,65,.6);border-radius:999px;padding:8px 20px;color:var(--brass)}
+  .formula .arrow{border:none;color:rgba(242,237,224,.5);padding:8px 0}
+
+  section{padding:56px 0}
+  .intro{max-width:44em;margin:0 auto;text-align:center;color:var(--muted)}
+  .intro b{color:var(--text)}
+
+  .block{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:36px;margin-bottom:28px;position:relative;overflow:hidden;
+  }
+  .block::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--brass)}
+  .block.sinker::before{background:var(--alarm)}
+  .block .stage{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .block h2{font-size:clamp(1.5rem,3vw,2rem);margin:0}
+  .block .when{font-size:.85rem;color:var(--muted);font-weight:600}
+  .block .why{
+    margin:14px 0 22px;padding:14px 18px;background:rgba(217,164,65,.1);
+    border:1px solid rgba(217,164,65,.4);border-radius:8px;font-size:.98rem;
+  }
+  .block.sinker .why{background:rgba(179,58,43,.07);border-color:rgba(179,58,43,.35)}
+  .block .why b{text-transform:uppercase;font-size:.75rem;letter-spacing:.1em;display:block;margin-bottom:4px;color:var(--brass-deep)}
+  .block.sinker .why b{color:var(--alarm)}
+  .block ol{margin:0;padding-left:22px;display:grid;gap:10px}
+  .block li{padding-left:6px}
+  .block li b{color:var(--text)}
+  .block li span{color:var(--muted)}
+
+  .rule{
+    background:var(--ink);color:#F2EDE0;text-align:center;
+    border-radius:var(--radius);padding:40px 32px;margin-top:8px;
+  }
+  .rule p{
+    font-family:Georgia,"Times New Roman",serif;font-style:italic;
+    font-size:clamp(1.15rem,2.4vw,1.5rem);max-width:30em;margin:12px auto 0;line-height:1.5;
+  }
+  .rule p b{color:var(--brass);font-style:normal}
+
+  .cta{text-align:center;padding:0 0 72px}
+  .cta a{
+    display:inline-block;background:linear-gradient(180deg,#E4B255,var(--brass));color:var(--brass-ink);
+    font-family:"Avenir Next Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;
+    text-transform:uppercase;letter-spacing:.06em;font-size:1.1rem;
+    padding:16px 34px;border-radius:6px;text-decoration:none;
+    box-shadow:0 4px 0 var(--brass-deep),0 12px 24px rgba(217,164,65,.35);
+  }
+  footer{text-align:center;color:var(--muted);font-size:.78rem;padding:0 24px 40px}
+  @media (max-width:640px){
+    header.hero{padding:52px 0 48px}
+    section{padding:40px 0}
+    .block{padding:26px 22px}
+  }
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">La estrategia detrás de la landing</p>
+    <h1 class="display">Por qué esta estructura vende</h1>
+    <p>La página está construida con la fórmula clásica de cierre <b>Hook, Line &amp; Sinker</b> — anzuelo, sedal y gancho — porque sigue el orden exacto en que decide la mente de un cliente potencial.</p>
+    <div class="formula">
+      <span>🪝 Hook · Captar</span><span class="arrow">→</span>
+      <span>🎣 Line · Convencer</span><span class="arrow">→</span>
+      <span>⚓ Sinker · Cerrar</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="intro" style="margin-bottom:44px">
+      Viene de la pesca: el <b>anzuelo</b> hace que muerdan, el <b>sedal</b> los trae sin que se suelten,
+      y el <b>gancho final</b> asegura la captura. Un visitante decide en tres etapas:
+      <b>¿me importa? → ¿te creo? → ¿por qué ahora?</b> Cada zona de la página responde una.
+    </p>
+
+    <div class="block">
+      <div class="stage"><h2 class="display">🪝 Hook — El anzuelo</h2><span class="when">Primeros 5 segundos · pantalla inicial</span></div>
+      <div class="why"><b>Por qué funciona</b>
+        8 de cada 10 visitantes se van en segundos si el primer pantallazo no habla de SU problema.
+        El hook no presenta a la firma: presenta el dolor del visitante y le quita todo el riesgo de responder.
+      </div>
+      <ol>
+        <li><b>Titular de dolor en sus palabras.</b> <span>"No dejes que un empleador injusto se aproveche de ti" — el visitante se reconoce al instante.</span></li>
+        <li><b>Promesa que elimina el riesgo.</b> <span>"$0 por adelantado — solo pagas si ganas". Sin esto, el miedo al costo mata todo.</span></li>
+        <li><b>Acción ridículamente fácil.</b> <span>El quiz "¿Tienes caso? 30 segundos" pide un tap, no un compromiso. Quien da 2 taps, casi siempre completa el tercero.</span></li>
+        <li><b>Prueba instantánea.</b> <span>5 estrellas de Google, atención en español, "tus derechos aplican sin importar tu estatus migratorio" — mata las 3 excusas de huir.</span></li>
+      </ol>
+    </div>
+
+    <div class="block">
+      <div class="stage"><h2 class="display">🎣 Line — El sedal</h2><span class="when">Los siguientes 2 minutos · el cuerpo de la página</span></div>
+      <div class="why"><b>Por qué funciona</b>
+        Nadie contrata un abogado por impulso: es una venta de confianza. Esta zona responde, en el orden
+        exacto en que aparecen en la cabeza, las dudas que matan la venta: ¿es real? → ¿funciona para gente
+        como yo? → ¿quién me defiende? → ¿qué pierdo si espero?
+      </div>
+      <ol>
+        <li><b>Video (VSL).</b> <span>Rostro y voz del abogado generan una confianza que ningún texto logra. 3 minutos que valen más que toda la página.</span></li>
+        <li><b>Números duros.</b> <span>80% cobra compensación de 5 cifras · 4–9 meses · $0 por adelantado. Los datos vuelven creíble la promesa.</span></li>
+        <li><b>El costo de esperar.</b> <span>Perder duele el doble que ganar: se le muestra lo que pierde cada semana que no actúa ($3,300/año la víctima promedio de robo de salario).</span></li>
+        <li><b>Las 7 razones.</b> <span>Los diferenciadores concretos, sin letra chica — directo del playbook de la firma.</span></li>
+        <li><b>Autoridad.</b> <span>Jordan: 20 años, ex-dirigente sindical. "Conoce el manual del empleador porque lo vio 20 años".</span></li>
+        <li><b>Reseñas reales de Google.</b> <span>Con nombre, fecha y avatar verificados. La gente le cree a otra gente, no a la marca — y las reseñas en español prueban que atienden en tu idioma.</span></li>
+        <li><b>El carrusel de oficios.</b> <span>Ejecutivos, construcción, enfermería, bartenders, housekeeping… el visitante piensa "aquí hay gente como yo".</span></li>
+      </ol>
+    </div>
+
+    <div class="block sinker">
+      <div class="stage"><h2 class="display">⚓ Sinker — El gancho final</h2><span class="when">El cierre · última zona de la página</span></div>
+      <div class="why"><b>Por qué funciona</b>
+        El deseo sin fecha límite se convierte en "lo hago después" — y después nunca llega. El cierre
+        convierte interés en cita AHORA usando urgencia <u>verdadera</u>: el plazo legal para demandar
+        sí vence. Eso es ley, no un truco de marketing.
+      </div>
+      <ol>
+        <li><b>Urgencia legítima.</b> <span>"Tu derecho a demandar tiene fecha de vencimiento" — muchos reclamos en NY vencen en menos de un año.</span></li>
+        <li><b>Reencuadre moral.</b> <span>"Reclamar no te hace conflictivo. Te hace un trabajador que cobra lo que ya ganó" — quita la última culpa.</span></li>
+        <li><b>Escasez honesta.</b> <span>Cupos de revisión limitados al mes (claim real de la firma) — actuar hoy tiene ventaja.</span></li>
+        <li><b>Formulario corto + beneficios al lado.</b> <span>Mientras llena sus datos, sigue leyendo por qué vale la pena.</span></li>
+        <li><b>FAQ anti-objeciones.</b> <span>Costo, miedo a represalias, "¿y si no tengo caso?", idioma — las últimas dudas mueren aquí.</span></li>
+        <li><b>Dock móvil permanente.</b> <span>Llamar · Mensaje · Cita gratis siempre bajo el pulgar. El cierre nunca queda a más de un tap.</span></li>
+      </ol>
+    </div>
+
+    <div class="rule">
+      <p class="eyebrow">La regla de oro</p>
+      <p>"Cada bloque responde la pregunta que el visitante tiene <b>justo en ese momento</b> del scroll. El orden no es decorativo — <b>es psicológico</b>."</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <a href="https://hollman18.github.io/elhag-landing/">Ver la landing en vivo →</a>
+</div>
+
+<footer>Demo construida a partir del contenido público de elhaglaw.com · Estructura de conversión Hook, Line &amp; Sinker</footer>
+</html>
