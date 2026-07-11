@@ -23,13 +23,27 @@
   }
   .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
   .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  :focus-visible{outline:3px solid var(--brass);outline-offset:2px;border-radius:4px}
 
   header.hero{
     background:linear-gradient(180deg,var(--ink),var(--ink-2));color:#F2EDE0;
-    padding:72px 0 64px;border-bottom:6px solid var(--brass);text-align:center;
+    padding:64px 0 64px;border-bottom:6px solid var(--brass);text-align:center;position:relative;
   }
+  .lang-switch{
+    position:absolute;top:18px;right:20px;
+    display:flex;border:1.5px solid rgba(242,237,224,.35);border-radius:999px;overflow:hidden;
+  }
+  .lang-switch button{
+    background:transparent;border:none;color:rgba(242,237,224,.7);cursor:pointer;
+    font-size:.8rem;font-weight:800;letter-spacing:.08em;padding:7px 14px;
+    transition:background .12s ease,color .12s ease;font-family:inherit;
+  }
+  .lang-switch button[aria-pressed="true"]{background:var(--brass);color:var(--brass-ink)}
+  .lang-switch button:not([aria-pressed="true"]):hover{color:var(--brass)}
+
   .hero h1{font-size:clamp(2rem,5vw,3.2rem);margin:16px 0 14px;color:#fff}
-  .hero p{max-width:38em;margin:0 auto;color:rgba(242,237,224,.85);font-size:1.1rem}
+  .hero .lead{max-width:38em;margin:0 auto;color:rgba(242,237,224,.85);font-size:1.1rem}
+  .hero .lead b{color:#fff}
   .hero .formula{
     display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px;
     font-family:"Avenir Next Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;
@@ -39,7 +53,7 @@
   .formula .arrow{border:none;color:rgba(242,237,224,.5);padding:8px 0}
 
   section{padding:56px 0}
-  .intro{max-width:44em;margin:0 auto;text-align:center;color:var(--muted)}
+  .intro{max-width:44em;margin:0 auto 44px;text-align:center;color:var(--muted)}
   .intro b{color:var(--text)}
 
   .block{
@@ -67,11 +81,11 @@
     background:var(--ink);color:#F2EDE0;text-align:center;
     border-radius:var(--radius);padding:40px 32px;margin-top:8px;
   }
-  .rule p{
+  .rule .quote{
     font-family:Georgia,"Times New Roman",serif;font-style:italic;
     font-size:clamp(1.15rem,2.4vw,1.5rem);max-width:30em;margin:12px auto 0;line-height:1.5;
   }
-  .rule p b{color:var(--brass);font-style:normal}
+  .rule .quote b{color:var(--brass);font-style:normal}
 
   .cta{text-align:center;padding:0 0 72px}
   .cta a{
@@ -80,95 +94,207 @@
     text-transform:uppercase;letter-spacing:.06em;font-size:1.1rem;
     padding:16px 34px;border-radius:6px;text-decoration:none;
     box-shadow:0 4px 0 var(--brass-deep),0 12px 24px rgba(217,164,65,.35);
+    transition:transform .12s ease;
   }
+  .cta a:hover{transform:translateY(-2px)}
   footer{text-align:center;color:var(--muted);font-size:.78rem;padding:0 24px 40px}
   @media (max-width:640px){
-    header.hero{padding:52px 0 48px}
+    header.hero{padding:64px 0 48px}
     section{padding:40px 0}
     .block{padding:26px 22px}
   }
 </style>
 
 <header class="hero">
+  <div class="lang-switch" role="group" aria-label="Language / Idioma">
+    <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+    <button type="button" data-set-lang="es" aria-pressed="true">ES</button>
+  </div>
   <div class="wrap">
-    <p class="eyebrow">La estrategia detrás de la landing</p>
-    <h1 class="display">Por qué esta estructura vende</h1>
-    <p>La página está construida con la fórmula clásica de cierre <b>Hook, Line &amp; Sinker</b> — anzuelo, sedal y gancho — porque sigue el orden exacto en que decide la mente de un cliente potencial.</p>
+    <p class="eyebrow" data-i18n="eyebrow">La estrategia detrás de la landing</p>
+    <h1 class="display" data-i18n="h1">Por qué esta estructura vende</h1>
+    <p class="lead" data-i18n="lead">La página está construida con la fórmula clásica de cierre <b>Hook, Line &amp; Sinker</b> — anzuelo, sedal y gancho — porque sigue el orden exacto en que decide la mente de un cliente potencial.</p>
     <div class="formula">
-      <span>🪝 Hook · Captar</span><span class="arrow">→</span>
-      <span>🎣 Line · Convencer</span><span class="arrow">→</span>
-      <span>⚓ Sinker · Cerrar</span>
+      <span data-i18n="f1">🪝 Hook · Captar</span><span class="arrow">→</span>
+      <span data-i18n="f2">🎣 Line · Convencer</span><span class="arrow">→</span>
+      <span data-i18n="f3">⚓ Sinker · Cerrar</span>
     </div>
   </div>
 </header>
 
 <section>
   <div class="wrap">
-    <p class="intro" style="margin-bottom:44px">
+    <p class="intro" data-i18n="intro">
       Viene de la pesca: el <b>anzuelo</b> hace que muerdan, el <b>sedal</b> los trae sin que se suelten,
       y el <b>gancho final</b> asegura la captura. Un visitante decide en tres etapas:
       <b>¿me importa? → ¿te creo? → ¿por qué ahora?</b> Cada zona de la página responde una.
     </p>
 
     <div class="block">
-      <div class="stage"><h2 class="display">🪝 Hook — El anzuelo</h2><span class="when">Primeros 5 segundos · pantalla inicial</span></div>
-      <div class="why"><b>Por qué funciona</b>
+      <div class="stage"><h2 class="display" data-i18n="hookH">🪝 Hook — El anzuelo</h2><span class="when" data-i18n="hookWhen">Primeros 5 segundos · pantalla inicial</span></div>
+      <div class="why" data-i18n="hookWhy"><b>Por qué funciona</b>
         8 de cada 10 visitantes se van en segundos si el primer pantallazo no habla de SU problema.
         El hook no presenta a la firma: presenta el dolor del visitante y le quita todo el riesgo de responder.
       </div>
       <ol>
-        <li><b>Titular de dolor en sus palabras.</b> <span>"No dejes que un empleador injusto se aproveche de ti" — el visitante se reconoce al instante.</span></li>
-        <li><b>Promesa que elimina el riesgo.</b> <span>"$0 por adelantado — solo pagas si ganas". Sin esto, el miedo al costo mata todo.</span></li>
-        <li><b>Acción ridículamente fácil.</b> <span>El quiz "¿Tienes caso? 30 segundos" pide un tap, no un compromiso. Quien da 2 taps, casi siempre completa el tercero.</span></li>
-        <li><b>Prueba instantánea.</b> <span>5 estrellas de Google, atención en español, "tus derechos aplican sin importar tu estatus migratorio" — mata las 3 excusas de huir.</span></li>
+        <li data-i18n="hook1"><b>Titular de dolor en sus palabras.</b> <span>"No dejes que un empleador injusto se aproveche de ti" — el visitante se reconoce al instante.</span></li>
+        <li data-i18n="hook2"><b>Promesa que elimina el riesgo.</b> <span>"$0 por adelantado — solo pagas si ganas". Sin esto, el miedo al costo mata todo.</span></li>
+        <li data-i18n="hook3"><b>Acción ridículamente fácil.</b> <span>El quiz "¿Tienes caso? 30 segundos" pide un tap, no un compromiso. Quien da 2 taps, casi siempre completa el tercero.</span></li>
+        <li data-i18n="hook4"><b>Prueba instantánea.</b> <span>5 estrellas de Google, atención en español, "tus derechos aplican sin importar tu estatus migratorio" — mata las 3 excusas de huir.</span></li>
       </ol>
     </div>
 
     <div class="block">
-      <div class="stage"><h2 class="display">🎣 Line — El sedal</h2><span class="when">Los siguientes 2 minutos · el cuerpo de la página</span></div>
-      <div class="why"><b>Por qué funciona</b>
+      <div class="stage"><h2 class="display" data-i18n="lineH">🎣 Line — El sedal</h2><span class="when" data-i18n="lineWhen">Los siguientes 2 minutos · el cuerpo de la página</span></div>
+      <div class="why" data-i18n="lineWhy"><b>Por qué funciona</b>
         Nadie contrata un abogado por impulso: es una venta de confianza. Esta zona responde, en el orden
         exacto en que aparecen en la cabeza, las dudas que matan la venta: ¿es real? → ¿funciona para gente
         como yo? → ¿quién me defiende? → ¿qué pierdo si espero?
       </div>
       <ol>
-        <li><b>Video (VSL).</b> <span>Rostro y voz del abogado generan una confianza que ningún texto logra. 3 minutos que valen más que toda la página.</span></li>
-        <li><b>Números duros.</b> <span>80% cobra compensación de 5 cifras · 4–9 meses · $0 por adelantado. Los datos vuelven creíble la promesa.</span></li>
-        <li><b>El costo de esperar.</b> <span>Perder duele el doble que ganar: se le muestra lo que pierde cada semana que no actúa ($3,300/año la víctima promedio de robo de salario).</span></li>
-        <li><b>Las 7 razones.</b> <span>Los diferenciadores concretos, sin letra chica — directo del playbook de la firma.</span></li>
-        <li><b>Autoridad.</b> <span>Jordan: 20 años, ex-dirigente sindical. "Conoce el manual del empleador porque lo vio 20 años".</span></li>
-        <li><b>Reseñas reales de Google.</b> <span>Con nombre, fecha y avatar verificados. La gente le cree a otra gente, no a la marca — y las reseñas en español prueban que atienden en tu idioma.</span></li>
-        <li><b>El carrusel de oficios.</b> <span>Ejecutivos, construcción, enfermería, bartenders, housekeeping… el visitante piensa "aquí hay gente como yo".</span></li>
+        <li data-i18n="line1"><b>Video (VSL).</b> <span>Rostro y voz del abogado generan una confianza que ningún texto logra. 3 minutos que valen más que toda la página.</span></li>
+        <li data-i18n="line2"><b>Números duros.</b> <span>80% cobra compensación de 5 cifras · 4–9 meses · $0 por adelantado. Los datos vuelven creíble la promesa.</span></li>
+        <li data-i18n="line3"><b>El costo de esperar.</b> <span>Perder duele el doble que ganar: se le muestra lo que pierde cada semana que no actúa ($3,300/año la víctima promedio de robo de salario).</span></li>
+        <li data-i18n="line4"><b>Las 7 razones.</b> <span>Los diferenciadores concretos, sin letra chica — directo del playbook de la firma.</span></li>
+        <li data-i18n="line5"><b>Autoridad.</b> <span>Jordan: 20 años, ex-dirigente sindical. "Conoce el manual del empleador porque lo vio 20 años".</span></li>
+        <li data-i18n="line6"><b>Reseñas reales de Google.</b> <span>Con nombre, fecha y avatar verificados. La gente le cree a otra gente, no a la marca — y las reseñas en español prueban que atienden en tu idioma.</span></li>
+        <li data-i18n="line7"><b>El carrusel de oficios.</b> <span>Ejecutivos, construcción, enfermería, bartenders, housekeeping… el visitante piensa "aquí hay gente como yo".</span></li>
       </ol>
     </div>
 
     <div class="block sinker">
-      <div class="stage"><h2 class="display">⚓ Sinker — El gancho final</h2><span class="when">El cierre · última zona de la página</span></div>
-      <div class="why"><b>Por qué funciona</b>
+      <div class="stage"><h2 class="display" data-i18n="sinkH">⚓ Sinker — El gancho final</h2><span class="when" data-i18n="sinkWhen">El cierre · última zona de la página</span></div>
+      <div class="why" data-i18n="sinkWhy"><b>Por qué funciona</b>
         El deseo sin fecha límite se convierte en "lo hago después" — y después nunca llega. El cierre
         convierte interés en cita AHORA usando urgencia <u>verdadera</u>: el plazo legal para demandar
         sí vence. Eso es ley, no un truco de marketing.
       </div>
       <ol>
-        <li><b>Urgencia legítima.</b> <span>"Tu derecho a demandar tiene fecha de vencimiento" — muchos reclamos en NY vencen en menos de un año.</span></li>
-        <li><b>Reencuadre moral.</b> <span>"Reclamar no te hace conflictivo. Te hace un trabajador que cobra lo que ya ganó" — quita la última culpa.</span></li>
-        <li><b>Escasez honesta.</b> <span>Cupos de revisión limitados al mes (claim real de la firma) — actuar hoy tiene ventaja.</span></li>
-        <li><b>Formulario corto + beneficios al lado.</b> <span>Mientras llena sus datos, sigue leyendo por qué vale la pena.</span></li>
-        <li><b>FAQ anti-objeciones.</b> <span>Costo, miedo a represalias, "¿y si no tengo caso?", idioma — las últimas dudas mueren aquí.</span></li>
-        <li><b>Dock móvil permanente.</b> <span>Llamar · Mensaje · Cita gratis siempre bajo el pulgar. El cierre nunca queda a más de un tap.</span></li>
+        <li data-i18n="sink1"><b>Urgencia legítima.</b> <span>"Tu derecho a demandar tiene fecha de vencimiento" — muchos reclamos en NY vencen en menos de un año.</span></li>
+        <li data-i18n="sink2"><b>Reencuadre moral.</b> <span>"Reclamar no te hace conflictivo. Te hace un trabajador que cobra lo que ya ganó" — quita la última culpa.</span></li>
+        <li data-i18n="sink3"><b>Escasez honesta.</b> <span>Cupos de revisión limitados al mes (claim real de la firma) — actuar hoy tiene ventaja.</span></li>
+        <li data-i18n="sink4"><b>Formulario corto + beneficios al lado.</b> <span>Mientras llena sus datos, sigue leyendo por qué vale la pena.</span></li>
+        <li data-i18n="sink5"><b>FAQ anti-objeciones.</b> <span>Costo, miedo a represalias, "¿y si no tengo caso?", idioma — las últimas dudas mueren aquí.</span></li>
+        <li data-i18n="sink6"><b>Dock móvil permanente.</b> <span>Llamar · Mensaje · Cita gratis siempre bajo el pulgar. El cierre nunca queda a más de un tap.</span></li>
       </ol>
     </div>
 
     <div class="rule">
-      <p class="eyebrow">La regla de oro</p>
-      <p>"Cada bloque responde la pregunta que el visitante tiene <b>justo en ese momento</b> del scroll. El orden no es decorativo — <b>es psicológico</b>."</p>
+      <p class="eyebrow" data-i18n="ruleEyebrow">La regla de oro</p>
+      <p class="quote" data-i18n="ruleTxt">"Cada bloque responde la pregunta que el visitante tiene <b>justo en ese momento</b> del scroll. El orden no es decorativo — <b>es psicológico</b>."</p>
     </div>
   </div>
 </section>
 
 <div class="cta">
-  <a href="https://hollman18.github.io/elhag-landing/">Ver la landing en vivo →</a>
+  <a href="https://hollman18.github.io/elhag-landing/" data-i18n="cta">Ver la landing en vivo →</a>
 </div>
 
-<footer>Demo construida a partir del contenido público de elhaglaw.com · Estructura de conversión Hook, Line &amp; Sinker</footer>
+<footer data-i18n="footer">Demo construida a partir del contenido público de elhaglaw.com · Estructura de conversión Hook, Line &amp; Sinker</footer>
+
+<script>
+  const I18N = {
+    es: {
+      title: "Por qué esta landing convierte — Hook, Line & Sinker",
+      eyebrow: "La estrategia detrás de la landing",
+      h1: "Por qué esta estructura vende",
+      lead: "La página está construida con la fórmula clásica de cierre <b>Hook, Line &amp; Sinker</b> — anzuelo, sedal y gancho — porque sigue el orden exacto en que decide la mente de un cliente potencial.",
+      f1: "🪝 Hook · Captar", f2: "🎣 Line · Convencer", f3: "⚓ Sinker · Cerrar",
+      intro: "Viene de la pesca: el <b>anzuelo</b> hace que muerdan, el <b>sedal</b> los trae sin que se suelten, y el <b>gancho final</b> asegura la captura. Un visitante decide en tres etapas: <b>¿me importa? → ¿te creo? → ¿por qué ahora?</b> Cada zona de la página responde una.",
+      hookH: "🪝 Hook — El anzuelo",
+      hookWhen: "Primeros 5 segundos · pantalla inicial",
+      hookWhy: "<b>Por qué funciona</b> 8 de cada 10 visitantes se van en segundos si el primer pantallazo no habla de SU problema. El hook no presenta a la firma: presenta el dolor del visitante y le quita todo el riesgo de responder.",
+      hook1: "<b>Titular de dolor en sus palabras.</b> <span>\"No dejes que un empleador injusto se aproveche de ti\" — el visitante se reconoce al instante.</span>",
+      hook2: "<b>Promesa que elimina el riesgo.</b> <span>\"$0 por adelantado — solo pagas si ganas\". Sin esto, el miedo al costo mata todo.</span>",
+      hook3: "<b>Acción ridículamente fácil.</b> <span>El quiz \"¿Tienes caso? 30 segundos\" pide un tap, no un compromiso. Quien da 2 taps, casi siempre completa el tercero.</span>",
+      hook4: "<b>Prueba instantánea.</b> <span>5 estrellas de Google, atención en español, \"tus derechos aplican sin importar tu estatus migratorio\" — mata las 3 excusas de huir.</span>",
+      lineH: "🎣 Line — El sedal",
+      lineWhen: "Los siguientes 2 minutos · el cuerpo de la página",
+      lineWhy: "<b>Por qué funciona</b> Nadie contrata un abogado por impulso: es una venta de confianza. Esta zona responde, en el orden exacto en que aparecen en la cabeza, las dudas que matan la venta: ¿es real? → ¿funciona para gente como yo? → ¿quién me defiende? → ¿qué pierdo si espero?",
+      line1: "<b>Video (VSL).</b> <span>Rostro y voz del abogado generan una confianza que ningún texto logra. 3 minutos que valen más que toda la página.</span>",
+      line2: "<b>Números duros.</b> <span>80% cobra compensación de 5 cifras · 4–9 meses · $0 por adelantado. Los datos vuelven creíble la promesa.</span>",
+      line3: "<b>El costo de esperar.</b> <span>Perder duele el doble que ganar: se le muestra lo que pierde cada semana que no actúa ($3,300/año la víctima promedio de robo de salario).</span>",
+      line4: "<b>Las 7 razones.</b> <span>Los diferenciadores concretos, sin letra chica — directo del playbook de la firma.</span>",
+      line5: "<b>Autoridad.</b> <span>Jordan: 20 años, ex-dirigente sindical. \"Conoce el manual del empleador porque lo vio 20 años\".</span>",
+      line6: "<b>Reseñas reales de Google.</b> <span>Con nombre, fecha y avatar verificados. La gente le cree a otra gente, no a la marca — y las reseñas en español prueban que atienden en tu idioma.</span>",
+      line7: "<b>El carrusel de oficios.</b> <span>Ejecutivos, construcción, enfermería, bartenders, housekeeping… el visitante piensa \"aquí hay gente como yo\".</span>",
+      sinkH: "⚓ Sinker — El gancho final",
+      sinkWhen: "El cierre · última zona de la página",
+      sinkWhy: "<b>Por qué funciona</b> El deseo sin fecha límite se convierte en \"lo hago después\" — y después nunca llega. El cierre convierte interés en cita AHORA usando urgencia <u>verdadera</u>: el plazo legal para demandar sí vence. Eso es ley, no un truco de marketing.",
+      sink1: "<b>Urgencia legítima.</b> <span>\"Tu derecho a demandar tiene fecha de vencimiento\" — muchos reclamos en NY vencen en menos de un año.</span>",
+      sink2: "<b>Reencuadre moral.</b> <span>\"Reclamar no te hace conflictivo. Te hace un trabajador que cobra lo que ya ganó\" — quita la última culpa.</span>",
+      sink3: "<b>Escasez honesta.</b> <span>Cupos de revisión limitados al mes (claim real de la firma) — actuar hoy tiene ventaja.</span>",
+      sink4: "<b>Formulario corto + beneficios al lado.</b> <span>Mientras llena sus datos, sigue leyendo por qué vale la pena.</span>",
+      sink5: "<b>FAQ anti-objeciones.</b> <span>Costo, miedo a represalias, \"¿y si no tengo caso?\", idioma — las últimas dudas mueren aquí.</span>",
+      sink6: "<b>Dock móvil permanente.</b> <span>Llamar · Mensaje · Cita gratis siempre bajo el pulgar. El cierre nunca queda a más de un tap.</span>",
+      ruleEyebrow: "La regla de oro",
+      ruleTxt: "\"Cada bloque responde la pregunta que el visitante tiene <b>justo en ese momento</b> del scroll. El orden no es decorativo — <b>es psicológico</b>.\"",
+      cta: "Ver la landing en vivo →",
+      footer: "Demo construida a partir del contenido público de elhaglaw.com · Estructura de conversión Hook, Line &amp; Sinker"
+    },
+    en: {
+      title: "Why This Landing Page Converts — Hook, Line & Sinker",
+      eyebrow: "The strategy behind the landing page",
+      h1: "Why this structure sells",
+      lead: "The page is built on the classic closing formula <b>Hook, Line &amp; Sinker</b> — because it follows the exact order in which a prospect's mind makes decisions.",
+      f1: "🪝 Hook · Grab", f2: "🎣 Line · Convince", f3: "⚓ Sinker · Close",
+      intro: "It comes from fishing: the <b>hook</b> makes them bite, the <b>line</b> reels them in without letting go, and the <b>sinker</b> secures the catch. A visitor decides in three stages: <b>do I care? → do I believe you? → why now?</b> Each zone of the page answers one.",
+      hookH: "🪝 Hook — Grab them",
+      hookWhen: "First 5 seconds · above the fold",
+      hookWhy: "<b>Why it works</b> 8 out of 10 visitors leave within seconds if the first screen isn't about THEIR problem. The hook doesn't introduce the firm — it names the visitor's pain and removes every risk of responding.",
+      hook1: "<b>A pain headline in their own words.</b> <span>\"Don't let an unfair employer take advantage of you\" — visitors recognize themselves instantly.</span>",
+      hook2: "<b>A promise that removes the risk.</b> <span>\"$0 upfront — you only pay if you win.\" Without this, fear of cost kills everything.</span>",
+      hook3: "<b>A ridiculously easy action.</b> <span>The \"Do you have a case? 30 seconds\" quiz asks for a tap, not a commitment. Whoever taps twice almost always completes the third step.</span>",
+      hook4: "<b>Instant proof.</b> <span>5 Google stars, service in Spanish, \"your rights apply no matter your immigration status\" — kills the 3 excuses to leave.</span>",
+      lineH: "🎣 Line — Reel them in",
+      lineWhen: "The next 2 minutes · the body of the page",
+      lineWhy: "<b>Why it works</b> Nobody hires a lawyer on impulse — it's a trust sale. This zone answers, in the exact order they appear in the visitor's head, the doubts that kill the sale: is this real? → does it work for people like me? → who will defend me? → what do I lose by waiting?",
+      line1: "<b>Video (VSL).</b> <span>The attorney's face and voice build a trust no text can. 3 minutes worth more than the whole page.</span>",
+      line2: "<b>Hard numbers.</b> <span>80% receive five-figure settlements · 4–9 months · $0 upfront. Data makes the promise believable.</span>",
+      line3: "<b>The cost of waiting.</b> <span>Losing hurts twice as much as winning: show them what every week of inaction costs ($3,300/year for the average wage-theft victim).</span>",
+      line4: "<b>The 7 reasons.</b> <span>Concrete differentiators, no fine print — straight from the firm's playbook.</span>",
+      line5: "<b>Authority.</b> <span>Jordan: 20 years, former union chief officer. \"He knows the employer's playbook because he watched them run it for 20 years.\"</span>",
+      line6: "<b>Real Google reviews.</b> <span>With verified names, dates and avatars. People believe other people, not brands — and the Spanish-language reviews prove the firm serves clients in their language.</span>",
+      line7: "<b>The occupations carousel.</b> <span>Executives, construction, nursing, bartenders, housekeeping… the visitor thinks \"there are people like me here.\"</span>",
+      sinkH: "⚓ Sinker — Close the deal",
+      sinkWhen: "The close · final zone of the page",
+      sinkWhy: "<b>Why it works</b> Desire without a deadline becomes \"I'll do it later\" — and later never comes. The close turns interest into an appointment NOW using <u>genuine</u> urgency: the legal deadline to sue really does expire. That's law, not a marketing trick.",
+      sink1: "<b>Legitimate urgency.</b> <span>\"Your right to sue has an expiration date\" — many NY claims expire in less than a year.</span>",
+      sink2: "<b>Moral reframe.</b> <span>\"Claiming what you're owed doesn't make you a troublemaker. It makes you a worker who collects what they already earned\" — removes the last guilt.</span>",
+      sink3: "<b>Honest scarcity.</b> <span>Limited review slots per month (the firm's real claim) — acting today has an advantage.</span>",
+      sink4: "<b>Short form + benefits alongside.</b> <span>While filling in their details, they keep reading why it's worth it.</span>",
+      sink5: "<b>Objection-killing FAQ.</b> <span>Cost, fear of retaliation, \"what if I don't have a case?\", language — the last doubts die here.</span>",
+      sink6: "<b>Permanent mobile dock.</b> <span>Call · Text · Free review always under the thumb. The close is never more than one tap away.</span>",
+      ruleEyebrow: "The golden rule",
+      ruleTxt: "\"Each block answers the question the visitor has <b>at that exact moment</b> of the scroll. The order isn't decorative — <b>it's psychological</b>.\"",
+      cta: "See the live landing page →",
+      footer: "Demo built from the public content of elhaglaw.com · Hook, Line & Sinker conversion structure"
+    }
+  };
+
+  function setLang(lang){
+    if(!I18N[lang]) lang = 'es';
+    const dict = I18N[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const v = dict[el.dataset.i18n];
+      if(v != null) el.innerHTML = v;
+    });
+    document.title = dict.title;
+    document.querySelectorAll('[data-set-lang]').forEach(btn=>{
+      btn.setAttribute('aria-pressed', String(btn.dataset.setLang === lang));
+    });
+    try{ localStorage.setItem('elhag-lang', lang); }catch(e){}
+  }
+  document.querySelectorAll('[data-set-lang]').forEach(btn=>{
+    btn.addEventListener('click', ()=> setLang(btn.dataset.setLang));
+  });
+  let initial = null;
+  try{ initial = localStorage.getItem('elhag-lang'); }catch(e){}
+  if(initial !== 'en' && initial !== 'es'){
+    const nav = (navigator.language || 'es').toLowerCase();
+    initial = nav.startsWith('es') ? 'es' : 'en';
+  }
+  setLang(initial);
+</script>
 </html>
