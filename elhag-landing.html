@@ -573,11 +573,16 @@
     background:var(--ink);color:var(--brass);display:grid;place-items:center;
     font-weight:800;font-size:1.05rem;
   }
-  .video-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:34px}
+  .video-row{
+    display:flex;gap:16px;margin-top:34px;
+    overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 10px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  }
   .vid{
     position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;
     display:grid;place-items:center;text-decoration:none;
     background:linear-gradient(160deg,var(--ink),var(--ink-3));border:1px solid var(--line-dark);
+    flex:0 0 330px;scroll-snap-align:start;
   }
   .vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85}
   .vid-play{
@@ -657,6 +662,7 @@
     .stats-grid{gap:20px 14px}
     .wait-grid{grid-template-columns:1fr}
     .person{flex-basis:44%}
+    .vid{flex-basis:80%}
     .hero-card{padding:24px 20px 20px}
     .book-form{padding:24px 20px}
     .urgency{padding:48px 0}
@@ -1695,9 +1701,10 @@
     window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
   });
 
-  /* =================== auto-advancing roles carousel =================== */
-  const strip = document.querySelector('.people');
-  if(strip && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  /* =================== auto-advancing carousels =================== */
+  function autoSlide(sel, cardSel, gap, interval){
+    const strip = document.querySelector(sel);
+    if(!strip || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let hovering = false;
     let lastInteraction = 0;
     strip.addEventListener('mouseenter', ()=> hovering = true);
@@ -1708,15 +1715,17 @@
     setInterval(()=>{
       if(hovering || document.hidden) return;
       if(performance.now() - lastInteraction < 6000) return;
-      const card = strip.querySelector('.person');
+      const card = strip.querySelector(cardSel);
       if(!card) return;
-      const step = card.offsetWidth + 14;
       const maxScroll = strip.scrollWidth - strip.clientWidth;
+      if(maxScroll <= 8) return;
       if(strip.scrollLeft >= maxScroll - 8){
         strip.scrollTo({left:0, behavior:'smooth'});
       } else {
-        strip.scrollBy({left:step, behavior:'smooth'});
+        strip.scrollBy({left:card.offsetWidth + gap, behavior:'smooth'});
       }
-    }, 2800);
+    }, interval);
   }
+  autoSlide('.people', '.person', 14, 2800);
+  autoSlide('.video-row', '.vid', 16, 3400);
 </script>
