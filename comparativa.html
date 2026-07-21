@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web actual vs. nueva landing — El-Hag &amp; Associates</title>
+<style>
+  :root{
+    --ink:#0E1B2E; --ink-2:#16263D; --paper:#F6F4EE; --paper-2:#FFFFFF;
+    --text:#1C2536; --muted:#5B6475; --brass:#D9A441; --brass-deep:#9C7222;
+    --brass-ink:#231A05; --alarm:#B33A2B; --ok:#2E7D4F; --line:#DCD7CA;
+    --shadow:0 10px 30px rgba(14,27,46,.12); --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  @media (min-width:1440px){html{font-size:18px}}
+  .display{
+    font-family:"Avenir Next Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+    font-weight:800;text-transform:uppercase;letter-spacing:.01em;line-height:1.06;text-wrap:balance;
+  }
+  .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  :focus-visible{outline:3px solid var(--brass);outline-offset:2px;border-radius:4px}
+
+  header.hero{
+    background:linear-gradient(180deg,var(--ink),var(--ink-2));color:#F2EDE0;
+    padding:64px 0;border-bottom:6px solid var(--brass);text-align:center;position:relative;
+  }
+  .lang-switch{
+    position:absolute;top:18px;right:20px;
+    display:flex;border:1.5px solid rgba(242,237,224,.35);border-radius:999px;overflow:hidden;
+  }
+  .lang-switch button{
+    background:transparent;border:none;color:rgba(242,237,224,.7);cursor:pointer;
+    font-size:.8rem;font-weight:800;letter-spacing:.08em;padding:7px 14px;
+    transition:background .12s ease,color .12s ease;font-family:inherit;
+  }
+  .lang-switch button[aria-pressed="true"]{background:var(--brass);color:var(--brass-ink)}
+  .lang-switch button:not([aria-pressed="true"]):hover{color:var(--brass)}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);margin:16px 0 14px;color:#fff}
+  .hero .lead{max-width:40em;margin:0 auto;color:rgba(242,237,224,.85);font-size:1.1rem}
+  .hero .lead b{color:var(--brass)}
+
+  section{padding:56px 0}
+
+  /* screenshots */
+  .shots{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:16px}
+  .shot{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .shot img{width:100%;display:block}
+  .shot .tag{
+    display:flex;align-items:center;gap:8px;padding:12px 16px;
+    font-family:"Avenir Next Condensed","Arial Narrow",Arial,sans-serif;
+    font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;
+  }
+  .shot.hoy .tag{color:var(--alarm)}
+  .shot.nueva .tag{color:var(--ok)}
+  .shot .dot{width:9px;height:9px;border-radius:50%}
+  .shot.hoy .dot{background:var(--alarm)}
+  .shot.nueva .dot{background:var(--ok)}
+  .verdict{
+    text-align:center;font-family:Georgia,"Times New Roman",serif;font-style:italic;
+    font-size:clamp(1.15rem,2.4vw,1.45rem);max-width:32em;margin:26px auto 0;color:var(--text);
+  }
+  .verdict b{color:var(--brass-deep);font-style:normal}
+
+  /* comparison rows */
+  .sec-head{max-width:44em;margin:0 auto 40px;text-align:center}
+  .sec-head h2{font-size:clamp(1.7rem,3.2vw,2.4rem);margin:12px 0 10px}
+  .sec-head p{color:var(--muted);margin:0}
+  .row{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:0 3px 12px rgba(14,27,46,.06);margin-bottom:18px;overflow:hidden;
+  }
+  .row h3{
+    margin:0;padding:16px 24px 0;
+    font-family:"Avenir Next Condensed","Arial Narrow",Arial,sans-serif;
+    font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:1.15rem;
+  }
+  .row .cells{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .cell{padding:16px 24px 20px}
+  .cell .lbl{
+    font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    display:flex;align-items:center;gap:6px;margin-bottom:6px;
+  }
+  .cell.hoy .lbl{color:var(--alarm)}
+  .cell.nueva .lbl{color:var(--ok)}
+  .cell p{margin:0;font-size:.95rem;color:var(--muted)}
+  .cell p b{color:var(--text)}
+  .cell.nueva{background:rgba(217,164,65,.07);border-left:1px solid var(--line)}
+
+  /* honesty band */
+  .honest{background:var(--ink);color:#F2EDE0;text-align:center}
+  .honest h2{color:#fff}
+  .honest .sec-head p{color:rgba(242,237,224,.8)}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:52em;margin:0 auto}
+  .chip{
+    border:1.5px solid rgba(217,164,65,.5);border-radius:999px;padding:8px 18px;
+    font-size:.88rem;color:rgba(242,237,224,.9);
+  }
+  .chip b{color:var(--brass)}
+
+  /* cta */
+  .cta{text-align:center;padding:0 0 72px}
+  .cta .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta a{
+    display:inline-block;font-family:"Avenir Next Condensed","Arial Narrow",Arial,sans-serif;
+    font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem;
+    padding:15px 30px;border-radius:6px;text-decoration:none;transition:transform .12s ease;
+  }
+  .cta a.gold{
+    background:linear-gradient(180deg,#E4B255,var(--brass));color:var(--brass-ink);
+    box-shadow:0 4px 0 var(--brass-deep),0 12px 24px rgba(217,164,65,.35);
+  }
+  .cta a.ghost{border:1.5px solid var(--brass-deep);color:var(--brass-deep)}
+  .cta a:hover{transform:translateY(-2px)}
+  footer{text-align:center;color:var(--muted);font-size:.78rem;padding:0 24px 40px}
+
+  @media (max-width:760px){
+    .shots{grid-template-columns:1fr}
+    .row .cells{grid-template-columns:1fr}
+    .cell.nueva{border-left:none;border-top:1px solid var(--line)}
+    section{padding:42px 0}
+  }
+</style>
+
+<header class="hero">
+  <div class="lang-switch" role="group" aria-label="Language / Idioma">
+    <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+    <button type="button" data-set-lang="es" aria-pressed="true">ES</button>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="eyebrow">Análisis comparativo · El-Hag &amp; Associates, P.C.</p>
+    <h1 class="display" data-i18n="h1">La web de hoy vs. la landing que proponemos</h1>
+    <p class="lead" data-i18n="lead">Las dos páginas hablan de la misma firma, con los mismos casos y las mismas reseñas. La diferencia es el trabajo que hace cada una: <b>la web actual informa; la nueva convierte visitantes en citas.</b></p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="shots">
+      <figure class="shot hoy" style="margin:0">
+        <div class="tag"><span class="dot"></span><span data-i18n="shotHoy">Hoy — elhaglaw.com</span></div>
+        <img src="comp-actual.jpg" alt="Sitio web actual de elhaglaw.com" loading="lazy">
+      </figure>
+      <figure class="shot nueva" style="margin:0">
+        <div class="tag"><span class="dot"></span><span data-i18n="shotNueva">Propuesta — nueva landing</span></div>
+        <img src="comp-nueva.jpg" alt="Nueva landing page propuesta" loading="lazy">
+      </figure>
+    </div>
+    <p class="verdict" data-i18n="verdict">"El visitante decide en 5 segundos. A la izquierda ve una firma que habla de sí misma. A la derecha ve <b>su problema, su solución y su primer paso</b> — sin hacer scroll."</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-i18n="compEyebrow">Punto por punto</p>
+      <h2 class="display" data-i18n="compH2">9 diferencias que mueven la aguja</h2>
+      <p data-i18n="compP">Cada fila explica qué hay hoy, qué proponemos y por qué cambia el resultado.</p>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r1h">1 · El primer pantallazo</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r1a">El titular habla de la firma ("The Law Firm That Fights…") sobre una foto de banco, y el llamado es un tímido "Contact us today" en texto plano. No hay promesa, ni números, ni razón para quedarse.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r1b">El titular habla del visitante: <b>"Cuando tu empleador infringe las normas, nosotros le hacemos pagar caro"</b>. Al lado, un quiz de 30 segundos ya le está pidiendo el primer tap. 8 de cada 10 visitantes deciden en este pantallazo.</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r2h">2 · El formulario</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r2a">Un formulario de contacto clásico: nombre, email, teléfono y "detalles del caso" en frío. Pedirle a un desconocido que escriba su caso es la fricción más alta posible.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r2b">Un quiz de micro-compromisos: <b>2 taps fáciles primero, los datos al final</b>. Y el paso 2 responde con su plazo legal — urgencia personalizada. Quien da dos taps casi siempre completa el tercero.</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r3h">3 · La prueba social</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r3a">Las reseñas de Google existen (4.5★, 155 reseñas) pero viven al fondo de la página y en una pestaña aparte. El visitante decide antes de llegar a verlas.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r3b"><b>Las 10 mejores reseñas rotan en loop infinito en el primer pantallazo</b>, con avatar, nombre y fecha, bajo el sello de Google 4.5★ · 155 reseñas. La confianza trabaja en los primeros 5 segundos, no 8 pantallas después.</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r4h">4 · Los números que venden</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r4a">Los datos más persuasivos de la firma (compensaciones de 5–6 cifras, la mayoría de los casos resueltos en 4–9 meses, $0 por adelantado) están escondidos en una página de funnel que casi nadie ve.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r4b">Esos mismos números — <b>de la propia firma</b> — van al frente en una banda de estadísticas, formulados con prudencia legal ("pueden alcanzar", "la mayoría").</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r5h">5 · La urgencia</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r5a">No existe. Sin una razón para actuar hoy, el visitante interesado dice "luego lo hago" — y "luego" nunca llega.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r5b">Urgencia <b>verdadera y legal</b>: el plazo para demandar vence (muchos reclamos en NY y NJ, en menos de un año). Es ley, no un truco — y convierte "algún día" en "hoy".</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r6h">6 · La experiencia móvil</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r6a">WordPress responsive estándar, con 4 botones flotantes que tapan contenido. Para llamar hay que buscar el número.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r6b">Diseñada móvil-primero (ahí está la mayoría del tráfico): <b>dock fijo Llamar · Mensaje · Cita bajo el pulgar</b>, quiz táctil, carruseles deslizables y botón de volver arriba. El cierre nunca está a más de un tap.</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r7h">7 · El idioma</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r7a">Hay versión en español, pero hay que encontrar la banderita y tocarla. La mitad de las reseñas de la firma están en español — ese cliente merece aterrizar en su idioma.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r7b"><b>Detecta el idioma del teléfono y abre directamente en español o inglés</b>, recuerda la elección, y desactiva el miedo clave: "tus derechos aplican sin importar tu estatus migratorio".</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r8h">8 · El propósito de la página</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r8a">Es un sitio institucional: menú de 6 secciones, blog, áreas de práctica, recursos… Muchas puertas de salida y ningún objetivo único. Perfecto para informar; débil para convertir tráfico de anuncios.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r8b"><b>Un solo objetivo: agendar la revisión gratuita.</b> Cada bloque sigue la fórmula Hook → Line → Sinker y empuja a esa única acción. Es la página a donde deben llegar los anuncios y campañas.</p></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3 data-i18n="r9h">9 · Velocidad y tecnología</h3>
+      <div class="cells">
+        <div class="cell hoy"><div class="lbl" data-i18n="lblHoy">✗ Hoy</div><p data-i18n="r9a">WordPress con plugins de terceros (widgets, pixels, chat): decenas de peticiones antes de pintar la pantalla. Cada segundo de carga en móvil cuesta visitantes.</p></div>
+        <div class="cell nueva"><div class="lbl" data-i18n="lblNueva">✓ Propuesta</div><p data-i18n="r9b"><b>Un solo archivo autocontenido</b> — fotos, reseñas y textos incluidos. Carga en ~0.2 segundos y no depende de ningún plugin. Menos espera = más gente que sí ve la página.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="honest">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:28px">
+      <p class="eyebrow" data-i18n="honEyebrow">Importante</p>
+      <h2 class="display" data-i18n="honH2">Nada se inventó: es su propia firma, mejor contada</h2>
+      <p data-i18n="honP">La nueva landing no agrega promesas nuevas — reorganiza los activos que la firma ya tiene, en el orden en que la mente del cliente decide.</p>
+    </div>
+    <div class="chips">
+      <span class="chip" data-i18n="c1"><b>Reseñas reales</b> del perfil de Google (verificadas)</span>
+      <span class="chip" data-i18n="c2"><b>Números publicados</b> por la propia firma en su funnel</span>
+      <span class="chip" data-i18n="c3"><b>Foto real de Jordan</b>, de sus propios videos, mejorada con IA</span>
+      <span class="chip" data-i18n="c4"><b>Logo y testimonios en video</b> oficiales</span>
+      <span class="chip" data-i18n="c5"><b>Los dos teléfonos reales</b> de la firma</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta" style="padding-top:56px">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:26px">
+      <h2 class="display" data-i18n="ctaH2">Véalo usted mismo</h2>
+    </div>
+    <div class="btns">
+      <a class="gold" href="https://hollman18.github.io/elhag-landing/" data-i18n="ctaBtn1">Ver la nueva landing →</a>
+      <a class="ghost" href="pitch.html" data-i18n="ctaBtn2">La estrategia (Hook, Line &amp; Sinker)</a>
+    </div>
+  </div>
+</section>
+
+<footer data-i18n="footer">Documento comparativo de propuesta · La web actual (elhaglaw.com) cumple bien su rol institucional — la nueva landing la complementa como destino de campañas y anuncios.</footer>
+
+<script>
+  const I18N = {
+    es: {
+      title: "Web actual vs. nueva landing — El-Hag & Associates",
+      eyebrow: "Análisis comparativo · El-Hag & Associates, P.C.",
+      h1: "La web de hoy vs. la landing que proponemos",
+      lead: "Las dos páginas hablan de la misma firma, con los mismos casos y las mismas reseñas. La diferencia es el trabajo que hace cada una: <b>la web actual informa; la nueva convierte visitantes en citas.</b>",
+      shotHoy: "Hoy — elhaglaw.com",
+      shotNueva: "Propuesta — nueva landing",
+      verdict: "\"El visitante decide en 5 segundos. A la izquierda ve una firma que habla de sí misma. A la derecha ve <b>su problema, su solución y su primer paso</b> — sin hacer scroll.\"",
+      compEyebrow: "Punto por punto",
+      compH2: "9 diferencias que mueven la aguja",
+      compP: "Cada fila explica qué hay hoy, qué proponemos y por qué cambia el resultado.",
+      lblHoy: "✗ Hoy", lblNueva: "✓ Propuesta",
+      r1h: "1 · El primer pantallazo",
+      r1a: "El titular habla de la firma (\"The Law Firm That Fights…\") sobre una foto de banco, y el llamado es un tímido \"Contact us today\" en texto plano. No hay promesa, ni números, ni razón para quedarse.",
+      r1b: "El titular habla del visitante: <b>\"Cuando tu empleador infringe las normas, nosotros le hacemos pagar caro\"</b>. Al lado, un quiz de 30 segundos ya le está pidiendo el primer tap. 8 de cada 10 visitantes deciden en este pantallazo.",
+      r2h: "2 · El formulario",
+      r2a: "Un formulario de contacto clásico: nombre, email, teléfono y \"detalles del caso\" en frío. Pedirle a un desconocido que escriba su caso es la fricción más alta posible.",
+      r2b: "Un quiz de micro-compromisos: <b>2 taps fáciles primero, los datos al final</b>. Y el paso 2 responde con su plazo legal — urgencia personalizada. Quien da dos taps casi siempre completa el tercero.",
+      r3h: "3 · La prueba social",
+      r3a: "Las reseñas de Google existen (4.5★, 155 reseñas) pero viven al fondo de la página y en una pestaña aparte. El visitante decide antes de llegar a verlas.",
+      r3b: "<b>Las 10 mejores reseñas rotan en loop infinito en el primer pantallazo</b>, con avatar, nombre y fecha, bajo el sello de Google 4.5★ · 155 reseñas. La confianza trabaja en los primeros 5 segundos, no 8 pantallas después.",
+      r4h: "4 · Los números que venden",
+      r4a: "Los datos más persuasivos de la firma (compensaciones de 5–6 cifras, la mayoría de los casos resueltos en 4–9 meses, $0 por adelantado) están escondidos en una página de funnel que casi nadie ve.",
+      r4b: "Esos mismos números — <b>de la propia firma</b> — van al frente en una banda de estadísticas, formulados con prudencia legal (\"pueden alcanzar\", \"la mayoría\").",
+      r5h: "5 · La urgencia",
+      r5a: "No existe. Sin una razón para actuar hoy, el visitante interesado dice \"luego lo hago\" — y \"luego\" nunca llega.",
+      r5b: "Urgencia <b>verdadera y legal</b>: el plazo para demandar vence (muchos reclamos en NY y NJ, en menos de un año). Es ley, no un truco — y convierte \"algún día\" en \"hoy\".",
+      r6h: "6 · La experiencia móvil",
+      r6a: "WordPress responsive estándar, con 4 botones flotantes que tapan contenido. Para llamar hay que buscar el número.",
+      r6b: "Diseñada móvil-primero (ahí está la mayoría del tráfico): <b>dock fijo Llamar · Mensaje · Cita bajo el pulgar</b>, quiz táctil, carruseles deslizables y botón de volver arriba. El cierre nunca está a más de un tap.",
+      r7h: "7 · El idioma",
+      r7a: "Hay versión en español, pero hay que encontrar la banderita y tocarla. La mitad de las reseñas de la firma están en español — ese cliente merece aterrizar en su idioma.",
+      r7b: "<b>Detecta el idioma del teléfono y abre directamente en español o inglés</b>, recuerda la elección, y desactiva el miedo clave: \"tus derechos aplican sin importar tu estatus migratorio\".",
+      r8h: "8 · El propósito de la página",
+      r8a: "Es un sitio institucional: menú de 6 secciones, blog, áreas de práctica, recursos… Muchas puertas de salida y ningún objetivo único. Perfecto para informar; débil para convertir tráfico de anuncios.",
+      r8b: "<b>Un solo objetivo: agendar la revisión gratuita.</b> Cada bloque sigue la fórmula Hook → Line → Sinker y empuja a esa única acción. Es la página a donde deben llegar los anuncios y campañas.",
+      r9h: "9 · Velocidad y tecnología",
+      r9a: "WordPress con plugins de terceros (widgets, pixels, chat): decenas de peticiones antes de pintar la pantalla. Cada segundo de carga en móvil cuesta visitantes.",
+      r9b: "<b>Un solo archivo autocontenido</b> — fotos, reseñas y textos incluidos. Carga en ~0.2 segundos y no depende de ningún plugin. Menos espera = más gente que sí ve la página.",
+      honEyebrow: "Importante",
+      honH2: "Nada se inventó: es su propia firma, mejor contada",
+      honP: "La nueva landing no agrega promesas nuevas — reorganiza los activos que la firma ya tiene, en el orden en que la mente del cliente decide.",
+      c1: "<b>Reseñas reales</b> del perfil de Google (verificadas)",
+      c2: "<b>Números publicados</b> por la propia firma en su funnel",
+      c3: "<b>Foto real de Jordan</b>, de sus propios videos, mejorada con IA",
+      c4: "<b>Logo y testimonios en video</b> oficiales",
+      c5: "<b>Los dos teléfonos reales</b> de la firma",
+      ctaH2: "Véalo usted mismo",
+      ctaBtn1: "Ver la nueva landing →",
+      ctaBtn2: "La estrategia (Hook, Line & Sinker)",
+      footer: "Documento comparativo de propuesta · La web actual (elhaglaw.com) cumple bien su rol institucional — la nueva landing la complementa como destino de campañas y anuncios."
+    },
+    en: {
+      title: "Current Website vs. New Landing Page — El-Hag & Associates",
+      eyebrow: "Comparative Analysis · El-Hag & Associates, P.C.",
+      h1: "Today's website vs. the landing page we propose",
+      lead: "Both pages talk about the same firm, the same cases and the same reviews. The difference is the job each one does: <b>the current site informs; the new one turns visitors into appointments.</b>",
+      shotHoy: "Today — elhaglaw.com",
+      shotNueva: "Proposed — new landing page",
+      verdict: "\"Visitors decide in 5 seconds. On the left they see a firm talking about itself. On the right they see <b>their problem, their solution and their first step</b> — without scrolling.\"",
+      compEyebrow: "Point by point",
+      compH2: "9 differences that move the needle",
+      compP: "Each row explains what exists today, what we propose, and why it changes the outcome.",
+      lblHoy: "✗ Today", lblNueva: "✓ Proposed",
+      r1h: "1 · Above the fold",
+      r1a: "The headline talks about the firm (\"The Law Firm That Fights…\") over a stock photo, and the call to action is a timid \"Contact us today\" in plain text. No promise, no numbers, no reason to stay.",
+      r1b: "The headline talks about the visitor: <b>\"When your employer breaks the rules, we make them pay\"</b>. Right beside it, a 30-second quiz is already asking for the first tap. 8 out of 10 visitors decide on this very screen.",
+      r2h: "2 · The form",
+      r2a: "A classic contact form: name, email, phone and cold \"case details\". Asking a stranger to write up their case is the highest possible friction.",
+      r2b: "A micro-commitment quiz: <b>2 easy taps first, contact info last</b>. And step 2 answers with their legal deadline — personalized urgency. Whoever taps twice almost always completes the third step.",
+      r3h: "3 · Social proof",
+      r3a: "The Google reviews exist (4.5★, 155 reviews) but live at the bottom of the page and on a separate tab. Visitors decide before they ever see them.",
+      r3b: "<b>The 10 best reviews rotate in an infinite loop on the first screen</b>, with avatar, name and date, under the Google 4.5★ · 155 reviews badge. Trust works in the first 5 seconds — not 8 screens later.",
+      r4h: "4 · The numbers that sell",
+      r4a: "The firm's most persuasive facts (5-to-6-figure settlements, most cases resolved in 4–9 months, $0 upfront) are hidden on a funnel page almost nobody sees.",
+      r4b: "Those same numbers — <b>the firm's own</b> — go front and center in a stats band, phrased with legal prudence (\"can reach\", \"most cases\").",
+      r5h: "5 · Urgency",
+      r5a: "There is none. Without a reason to act today, an interested visitor says \"I'll do it later\" — and later never comes.",
+      r5b: "<b>Genuine, legal urgency</b>: the deadline to sue expires (many NY and NJ claims, in under a year). It's law, not a trick — and it turns \"someday\" into \"today\".",
+      r6h: "6 · The mobile experience",
+      r6a: "Standard responsive WordPress, with 4 floating buttons covering content. To call, you have to hunt for the number.",
+      r6b: "Designed mobile-first (where most of the traffic is): <b>a fixed Call · Text · Free Review dock under the thumb</b>, a tappable quiz, swipeable carousels and a back-to-top button. The close is never more than one tap away.",
+      r7h: "7 · Language",
+      r7a: "A Spanish version exists, but you have to find the little flag and tap it. Half of the firm's reviews are in Spanish — that client deserves to land in their language.",
+      r7b: "<b>Detects the phone's language and opens directly in Spanish or English</b>, remembers the choice, and defuses the key fear: \"your rights apply no matter your immigration status\".",
+      r8h: "8 · The page's purpose",
+      r8a: "It's an institutional site: a 6-section menu, blog, practice areas, resources… Many exit doors and no single goal. Great for informing; weak for converting ad traffic.",
+      r8b: "<b>One single goal: booking the free case review.</b> Every block follows the Hook → Line → Sinker formula and pushes toward that one action. It's the page ads and campaigns should land on.",
+      r9h: "9 · Speed & technology",
+      r9a: "WordPress with third-party plugins (widgets, pixels, chat): dozens of requests before the screen paints. Every second of mobile load time costs visitors.",
+      r9b: "<b>A single self-contained file</b> — photos, reviews and copy included. Loads in ~0.2 seconds with zero plugin dependencies. Less waiting = more people who actually see the page.",
+      honEyebrow: "Important",
+      honH2: "Nothing was invented: it's their own firm, told better",
+      honP: "The new landing adds no new promises — it reorganizes the assets the firm already owns, in the order the client's mind makes decisions.",
+      c1: "<b>Real reviews</b> from the Google profile (verified)",
+      c2: "<b>Numbers published</b> by the firm itself in its funnel",
+      c3: "<b>Jordan's real photo</b>, from his own videos, AI-enhanced",
+      c4: "<b>Official logo and video testimonials</b>",
+      c5: "<b>The firm's two real phone lines</b>",
+      ctaH2: "See it for yourself",
+      ctaBtn1: "View the new landing →",
+      ctaBtn2: "The strategy (Hook, Line & Sinker)",
+      footer: "Proposal comparison document · The current site (elhaglaw.com) serves its institutional role well — the new landing complements it as the destination for campaigns and ads."
+    }
+  };
+
+  function setLang(lang){
+    if(!I18N[lang]) lang = 'es';
+    const dict = I18N[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const v = dict[el.dataset.i18n];
+      if(v != null) el.innerHTML = v;
+    });
+    document.title = dict.title;
+    document.querySelectorAll('[data-set-lang]').forEach(btn=>{
+      btn.setAttribute('aria-pressed', String(btn.dataset.setLang === lang));
+    });
+    try{ localStorage.setItem('elhag-lang', lang); }catch(e){}
+  }
+  document.querySelectorAll('[data-set-lang]').forEach(btn=>{
+    btn.addEventListener('click', ()=> setLang(btn.dataset.setLang));
+  });
+  let initial = null;
+  try{ initial = localStorage.getItem('elhag-lang'); }catch(e){}
+  if(initial !== 'en' && initial !== 'es'){
+    const nav = (navigator.language || 'es').toLowerCase();
+    initial = nav.startsWith('es') ? 'es' : 'en';
+  }
+  setLang(initial);
+</script>
+</html>
